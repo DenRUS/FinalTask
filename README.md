@@ -1,2 +1,2 @@
 # FinalTask
-The program performs siple operations with ordinary fractions.
+The program performs simple operations with ordinary fractions.
