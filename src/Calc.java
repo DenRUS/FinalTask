@@ -38,7 +38,7 @@ public class Calc {
 	}
 	
 	/*
-	 * ѕровер€ет входной массив на корректность по критери€м корректности входных данных программы
+	 * Checks input array for correctness by criteria of the logic of the program
 	 */
 	public static String inputCheck(String[] args) {
 		String input= "";
@@ -57,7 +57,7 @@ public class Calc {
 	}
 	
 	/*
-	 * –аздел€ет строку на операнды(тоже строкового типа) согласно логике программы
+	 * Splits input String into the array of strings according to the logic of the program (and pattern)
 	 */
 	public static String[] fragmentationToOperands(String input) {
 		Pattern pattern = Pattern.compile(":|-|[*]|[+]|/|\\\\");
@@ -65,7 +65,7 @@ public class Calc {
 	}
 	
 	/*
-	 * –аздел€ет входной массив на несколько выражений дл€ счета
+	 * Splits input string into different strings, which are expressions for execution
 	 */
 	public static String[] fragmentationToExspressions(String input) {
 		Pattern pattern = Pattern.compile(";");
@@ -74,33 +74,33 @@ public class Calc {
 	
 	
 	/*
-	 * операци€ сложени€ обычных дробей
+	 * sum operation for fractions
 	 */
 	private static String fracSum (int[] ops) {
 		return Integer.toString(ops[0]*ops[3]+ops[2]*ops[1])+"/"+Integer.toString(ops[1]*ops[3]);
 	}
 	
 	/*
-	 * операци€ вычитани€ обычных дробей
+	 * difference operation for fractions
 	 */
 	private static String fracDif (int[] ops) {
 		return Integer.toString(ops[0]*ops[3]-ops[2]*ops[1])+"/"+Integer.toString(ops[1]*ops[3]);
 	}
 	/*
-	 * операци€ умножени€ обычных дробей
+	 * multiplication operation for fractions
 	 */
 	private static String fracMult (int[] ops) {
 		return Integer.toString(ops[0]*ops[2])+"/"+Integer.toString(ops[1]*ops[3]);
 	}
 	/*
-	 * операци€ делени€ обычных дробей
+	 * division operation for fractions
 	 */
 	private static String fracDiv (int[] ops) {
 		return Integer.toString(ops[0]*ops[3])+"/"+Integer.toString(ops[1]*ops[2]);
 	}
 	
 	/*
-	 * реализует вычислени€ согласно логике программы
+	 * execute calculation according to the logic of the program
 	 */
 	public static String[] fracExec (String[] args) throws Exception {
 		String input = inputCheck(args);
@@ -114,7 +114,7 @@ public class Calc {
 	}
 	
 	/*
-	 * выполнение операции, записанной в строке
+	 * execute the operation, which is written in input string
 	 */
 	public static String operationExec (String input) throws Exception {	
 		String[] ops = fragmentationToOperands(input);
@@ -134,7 +134,7 @@ public class Calc {
 	}
 
 	/*
-	 * реализует логику программы, если в качестве аргумента указан файл
+	 * realizes the logic of the program in case of the filename is set as the parameter
 	 */
 	public static void fileExec(String inputString) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -167,7 +167,7 @@ public class Calc {
 		}		
 	}
 	/*
-	 * маршализаци€ элемента типа Result
+	 * marshallise argument 
 	 */
 	public static void marsh(Result arg)	{
 		OutputStream os = null;
@@ -188,7 +188,7 @@ public class Calc {
 	}
 }
 /*
- * класс дл€ маршализации
+ * class for marshalling
  */
 @XmlRootElement
 class Result {
