@@ -1,4 +1,3 @@
-//import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,6 +19,11 @@ public class Calc {
 		if (args.length == 1 && Pattern.matches(".*\\..{1,3}$", args[0])) {
 			fileExec(args[0]);
 		} else {
+			for (int k = 1; k < args.length; k++) {
+				if (Pattern.matches(".*\\..{1,5}$", args[k])){
+					args[k] = "n*";
+				}
+			}
 			try {
 				String [] result = fracExec(args);
 				for (int j = 0; j < result.length; j++){
@@ -38,16 +42,16 @@ public class Calc {
 	 */
 	public static String inputCheck(String[] args) {
 		String input= "";
-		if (args.length > 7) System.out.println("Too many operands!Spliting them...");
 		for ( int i = 0; i < args.length; i++){
 			input = input + args[i].replaceAll(" ","");
 		}
+		input = input.replaceAll("(n\\*){2,}", "\\*");
 		if (Pattern.matches("(.*;null;$)|(.*;$)", input)) {
 			input = input.replaceAll("(;null;$)|(;$)", "");
 		}
-		if (Pattern.matches(".*[^\\+\\d\\*:;/-].*", input)) {
-			System.out.println("Input contains letters! Removing them...");
-			input = input.replaceAll("[^\\+\\d\\*:/-]", "");
+		if (Pattern.matches(".*[^\\+\\d\\*\\\\:;/-].*", input)) {
+			System.out.println("Input contains invalid characters! Deleting them...");
+			input = input.replaceAll("[^\\+\\d\\*\\\\:/-]", "");
 		}
 		return input;		
 	}
@@ -56,7 +60,7 @@ public class Calc {
 	 * –аздел€ет строку на операнды(тоже строкового типа) согласно логике программы
 	 */
 	public static String[] fragmentationToOperands(String input) {
-		Pattern pattern = Pattern.compile(":|-|[*]|[+]|/");
+		Pattern pattern = Pattern.compile(":|-|[*]|[+]|/|\\\\");
 		return pattern.split(input);				
 	}
 	
@@ -117,11 +121,12 @@ public class Calc {
 		if (ops.length != 4 ) {throw new Exception("Wrong input!");}
 		int[] intOps = new int[4];
 		for ( int j = 0; j < 4; j++) {intOps[j] = new Integer(ops[j]);}
-		if (intOps[1]*intOps[3] == 0) {throw new Exception("Divide by zero!");}
-		String expressionToExecute = input.replaceAll("[^-/\\+\\*]", "").substring(1, 2);
+		String expressionToExecute = input.replaceAll("[^\\+\\*-/\\\\]", "").substring(1, 2);
+		if (intOps[1]*intOps[3] == 0 || (intOps[2] == 0 && expressionToExecute.equals("/"))) {throw new Exception("Divide by zero!");}
 		switch (expressionToExecute) {
 		case "+":return fracSum(intOps);
 		case "-":return fracDif(intOps);
+		case "\\":
 		case "/":return fracDiv(intOps);
 		case "*":return fracMult(intOps);
 		default:throw new Exception("Something goes wrong.. there is no operation symbol.");
