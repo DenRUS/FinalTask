@@ -49,12 +49,10 @@ public class Calc {
 		if (Pattern.matches("(.*;null;$)|(.*;$)", input)) {
 			input = input.replaceAll("(;null;$)|(;$)", "");
 		}
-		System.out.println(input);
 		if (Pattern.matches(".*[^\\+\\d\\*\\\\:;/-].*", input)) {
 			System.out.println("Input contains invalid characters! Deleting them...");
 			input = input.replaceAll("[^\\+\\d\\*\\\\:;/-]", "");
 		}
-		System.out.println(input);
 		return input;		
 	}
 	
