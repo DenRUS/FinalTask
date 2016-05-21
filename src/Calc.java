@@ -9,11 +9,10 @@ import java.util.regex.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 public class Calc {
-	private static String outputFileName = new String("output.xml");
-
+	final static String outputFileName = new String("output.xml");
+	
 	
 	public static void main(String[] args) {
 		if (args.length == 1 && Pattern.matches(".*\\..{1,3}$", args[0])) {
@@ -25,10 +24,9 @@ public class Calc {
 				}
 			}
 			try {
-				String [] result = fracExec(args);
-				for (int j = 0; j < result.length; j++){
-					System.out.println(result[j]);
-				}				
+				for(String s: fracExec(args)){
+					System.out.println(s);
+				}
 			} catch (Exception e) {
 				System.out.println("Error!");
 				e.printStackTrace();
@@ -42,8 +40,8 @@ public class Calc {
 	 */
 	public static String inputCheck(String[] args) {
 		String input= "";
-		for ( int i = 0; i < args.length; i++){
-			input = input + args[i].replaceAll(" ","");
+		for (String arg: args) {
+			input = input + arg.replaceAll(" ", "");
 		}
 		input = input.replaceAll("(n\\*){2,}", "\\*");
 		if (Pattern.matches("(.*;null;$)|(.*;$)", input)) {
@@ -120,7 +118,7 @@ public class Calc {
 		String[] ops = fragmentationToOperands(input);
 		if (ops.length != 4 ) {throw new Exception("Wrong input!");}
 		int[] intOps = new int[4];
-		for ( int j = 0; j < 4; j++) {intOps[j] = new Integer(ops[j]);}
+		for ( int j = 0; j < intOps.length; j++) {intOps[j] = new Integer(ops[j]);}
 		String expressionToExecute = input.replaceAll("[^\\+\\*-/\\\\]", "").substring(1, 2);
 		if (intOps[1]*intOps[3] == 0 || (intOps[2] == 0 && expressionToExecute.equals("/"))) {throw new Exception("Divide by zero!");}
 		switch (expressionToExecute) {
@@ -160,32 +158,13 @@ public class Calc {
 		String[] args = list.toArray(new String[list.size()]);
 		try {
 			Result result = new Result(fracExec(args));	
-			marsh(result);
+			result.marsh(outputFileName);
 		} catch (Exception e) {
 			System.out.println("Error!");
 			e.printStackTrace();
 		}		
 	}
-	/*
-	 * marshallise argument 
-	 */
-	public static void marsh(Result arg)	{
-		OutputStream os = null;
-		try {
-			File of = new File(outputFileName);
-			os = new FileOutputStream(of);
-			JAXBContext context = JAXBContext.newInstance(Result.class);
-			Marshaller mar = context.createMarshaller();
-			mar.marshal(arg, os);
-			os.close();
-		} catch (IOException ex) {
-			System.out.println("Oh..again troubles..");
-			ex.printStackTrace();
-		} catch (JAXBException ex) {
-			System.out.println("Oh..again troubles..");
-			ex.printStackTrace();
-		}
-	}
+	
 }
 /*
  * class for marshalling
@@ -195,4 +174,27 @@ class Result {
 	public String[] res;
 	Result(String[] args) {this.res = args;}
 	Result(){};
+	
+	/*
+	 * marshallise itself
+	 */
+	public void marsh(String outputFileName)	{
+		OutputStream os = null;
+		try {
+//			File of = new File(outputFileName);
+//			os = new FileOutputStream(of);
+//			JAXBContext context = JAXBContext.newInstance(Result.class);
+//			Marshaller mar = context.createMarshaller();
+			
+			os = new FileOutputStream(new File(outputFileName));
+			JAXBContext.newInstance(Result.class).createMarshaller().marshal(this, os);
+			os.close();
+		} catch (IOException ex) {
+			System.out.println("Oh..again troubles..");
+			ex.printStackTrace();
+		} catch (JAXBException ex) {
+			System.out.println("Oh..again troubles..");
+			ex.printStackTrace();
+		}
+	}
 }
