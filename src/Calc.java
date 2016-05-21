@@ -15,7 +15,7 @@ public class Calc {
 	
 	
 	public static void main(String[] args) {
-		if (args.length == 1 && Pattern.matches(".*\\..{1,3}$", args[0])) {
+		if (args.length == 1 && Pattern.matches(".*\\..{2,4}$", args[0])) {
 			fileExec(args[0]);
 		} else {
 			for (int k = 1; k < args.length; k++) {
@@ -105,7 +105,13 @@ public class Calc {
 		
 		String[] res = new String[expressions.length];
 		for ( int i = 0; i < expressions.length; i++) {
-			res[i] = operationExec(expressions[i]);
+			try {
+				res[i] = operationExec(expressions[i]);
+			} catch (Exception e) {
+				res[i] = "Wrong input!";
+				System.out.println("Exception at execution!");
+				e.printStackTrace();
+			}
 		}
 		return res;		
 	}
@@ -117,7 +123,6 @@ public class Calc {
 		if (input.replaceAll("[^\\+]", "").length() > 1 || input.replaceAll("[^-]", "").length() > 1
 				|| input.replaceAll("[^\\*]", "").length() > 1 || input.replaceAll("[^\\+\\*\\\\:/-]", "").length() > 3 
 				|| input.replaceAll("[^\\\\:/]", "").length() < 2) {
-			System.out.println(input);
 			throw new Exception("Wrong number of actions!");
 		}
 		String[] ops = fragmentationToOperands(input);
