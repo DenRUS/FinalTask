@@ -32,13 +32,12 @@ public class Calc {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 	
 	/*
 	 * Checks input array for correctness by criteria of the logic of the program
 	 */
-	public static String inputCheck(String[] args) {
+	public static String inputCheck(String[] args) throws Exception{
 		String input= "";
 		for (String arg: args) {
 			input = input + arg.replaceAll(" ", "");
@@ -68,8 +67,7 @@ public class Calc {
 	public static String[] fragmentationToExspressions(String input) {
 		Pattern pattern = Pattern.compile(";");
 		return pattern.split(input);				
-	}
-	
+	}	
 	
 	/*
 	 * sum operation for fractions
@@ -103,18 +101,25 @@ public class Calc {
 	public static String[] fracExec (String[] args) throws Exception {
 		String input = inputCheck(args);
 		String[] expressions = fragmentationToExspressions(input);
+		
+		
 		String[] res = new String[expressions.length];
 		for ( int i = 0; i < expressions.length; i++) {
 			res[i] = operationExec(expressions[i]);
 		}
-		return res;
-		
+		return res;		
 	}
 	
 	/*
 	 * execute the operation, which is written in input string
 	 */
 	public static String operationExec (String input) throws Exception {	
+		if (input.replaceAll("[^\\+]", "").length() > 1 || input.replaceAll("[^-]", "").length() > 1
+				|| input.replaceAll("[^\\*]", "").length() > 1 || input.replaceAll("[^\\+\\*\\\\:/-]", "").length() > 3 
+				|| input.replaceAll("[^\\\\:/]", "").length() < 2) {
+			System.out.println(input);
+			throw new Exception("Wrong number of actions!");
+		}
 		String[] ops = fragmentationToOperands(input);
 		if (ops.length != 4 ) {throw new Exception("Wrong input!");}
 		int[] intOps = new int[4];
@@ -181,11 +186,6 @@ class Result {
 	public void marsh(String outputFileName)	{
 		OutputStream os = null;
 		try {
-//			File of = new File(outputFileName);
-//			os = new FileOutputStream(of);
-//			JAXBContext context = JAXBContext.newInstance(Result.class);
-//			Marshaller mar = context.createMarshaller();
-			
 			os = new FileOutputStream(new File(outputFileName));
 			JAXBContext.newInstance(Result.class).createMarshaller().marshal(this, os);
 			os.close();
