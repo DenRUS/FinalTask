@@ -9,7 +9,7 @@ The program performs simple operations with ordinary fractions.
 
 +3. README.md не содержит никакой полезной информации - как собрать и пользоваться?
 
--+4. отсутствуют тесты, нет возможности проверить работоспособность
++-4. отсутствуют тесты, нет возможности проверить работоспособность
 
 +5. класс Calc перегружен, исключительно статические операции, разделить на отдельные классы, сейчас это процедурный подход с множественным дублированием, такой код невозможно сопровождать
 
@@ -29,5 +29,3 @@ You can run my program with "java -jar FracCalcArtifact-0.0.1-SNAPSHOT.jar <argu
 Where arguments could be:
 1. Expressions with ordinary fractions to calculate(like 2/3+3/2;1/2-3/2) etc. You will get result at the command line.
 2. Name of the file with expressions with ordinary fractions to calculate. You will get result at output.xml at directory of the jar.
-
-Note: for system reasons expressions like "3/2 * 2/3" could be incorrect. Try "3/2*2/3"
