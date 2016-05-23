@@ -63,6 +63,4 @@ public class FracOperations {
 	private String fracDiv (int[] ops) {
 		return Integer.toString(ops[0]*ops[3])+"/"+Integer.toString(ops[1]*ops[2]);
 	}
-
-	
 }
