@@ -15,5 +15,6 @@ public class Calc {
 		Executor exec = new Executor(outputFileName);
 		exec.execute(args);
 		
+		
 	}
 }

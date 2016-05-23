@@ -94,6 +94,7 @@ public class Executor {
 	 * execute the operation, which is written in input string
 	 * 
 	 * @param input string with expression
+	 * @param fracCalc calculator
 	 * 
 	 * @return string with the result
 	 * 
@@ -113,7 +114,7 @@ public class Executor {
 	/**
 	 * realizes the logic of the program in case of the filename is set as the parameter
 	 * 
-	 * @param name of the file with expressions
+	 * @param inputString name of the file with expressions
 	 */
 	public void fileExec(String inputString) {
 		ArrayList<String> list = new ArrayList<String>();

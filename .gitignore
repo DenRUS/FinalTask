@@ -1,4 +1,11 @@
+target/
 .classpath
 .project
-bin
-.settings
+bin/
+.settings/
+fractionCalculatorv1.2.jar
+fr.jar
+1.txt
+output.xml
+frac.jar
+fractionCalculator.jar

@@ -33,13 +33,12 @@ public interface Checker {
 		} else {
 			return false;
 		}
-		
 	}
 	
 	/**
 	 * checks number of operands
-	 * @param ops
-	 * @return
+	 * @param ops operands to check
+	 * @return true if there are correct number of operands and false if not
 	 */
 	public default boolean correctOperandsNumberCheck(String[] ops){
 		if (ops.length != 4){
