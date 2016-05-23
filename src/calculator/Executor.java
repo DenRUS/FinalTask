@@ -49,7 +49,7 @@ public class Executor {
 			fileExec(args[0]);
 		} else {
 			for (int k = 1; k < args.length; k++) {
-				if (Pattern.matches(".*\\..{1,5}$", args[k])){
+				if (Pattern.matches(".*\\..{1,}$", args[k])){
 					args[k] = "n*";
 				}
 			}

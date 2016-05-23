@@ -1,6 +1,7 @@
 package calculator;
 
-import calculator.Executor;;
+import calculator.Executor;
+import test.TestCalculator;;
 
 /**
  * main class
@@ -12,9 +13,11 @@ public class Calc {
 	
 	
 	public static void main(String[] args) {
-		Executor exec = new Executor(outputFileName);
-		exec.execute(args);
-		
-		
+		if (args.length == 0) {
+			TestCalculator.testMethod();
+		} else {
+			Executor exec = new Executor(outputFileName);
+			exec.execute(args);
+		}
 	}
 }
